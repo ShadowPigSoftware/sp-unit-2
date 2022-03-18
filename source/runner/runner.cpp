@@ -5,7 +5,8 @@
 namespace SPUnit {
    
     Runner::Runner(Reporter& reporter, OutputStream& outputStream):
-        _reporter(&reporter)
+        _reporter(&reporter),
+        _outputStream(&outputStream)
     {
         Internal::RunnerReporterAttorney::setOutputStream(reporter, outputStream);
     }
@@ -15,4 +16,16 @@ namespace SPUnit {
         _global_spunit_fixture.run(*_reporter);
         return 0;
     };
+
+    void Runner::setReporter(Reporter& reporter)
+    {
+        _reporter = &reporter;
+        Internal::RunnerReporterAttorney::setOutputStream(*_reporter, *_outputStream);
+    }
+
+    void Runner::setOutputStream(OutputStream& outputStream)
+    {
+        _outputStream = &outputStream;
+        Internal::RunnerReporterAttorney::setOutputStream(*_reporter, *_outputStream);
+    }
 }

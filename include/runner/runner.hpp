@@ -9,7 +9,11 @@ namespace SPUnit {
     public:
         Runner(Reporter& reporter, OutputStream& outputStream);
         int run();
+
+        void setReporter(Reporter& reporter);
+        void setOutputStream(OutputStream& outputStream);
     private:
         Reporter* _reporter;
+        OutputStream* _outputStream;
     };
 }

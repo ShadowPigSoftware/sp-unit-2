@@ -3,8 +3,7 @@
 #include "runner/spec_reporter.hpp"
 namespace {
     ::SPUnit::SpecReporter defaultReporter;
-    ::SPUnit::CoutOutputStream::ColorSupport::Ansi8 ansi8;
-    ::SPUnit::CoutOutputStream defaultOutputStream(ansi8);
+    ::SPUnit::CoutOutputStream defaultOutputStream;
     ::SPUnit::Runner runner = {defaultReporter, defaultOutputStream};
 }
 
