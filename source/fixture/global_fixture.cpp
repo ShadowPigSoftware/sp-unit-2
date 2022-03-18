@@ -5,9 +5,9 @@ namespace SPUnit {
         Fixture{}
     {}
 
-    void GlobalFixture::run(Reporter& reporter, OutputStream& stream) const {
+    void GlobalFixture::run(Reporter& reporter) const {
         for (const Runnable* runnable: _runnables) {
-            Fixture::run(runnable, reporter, stream);
+            Fixture::run(runnable, reporter);
         }
     }
     

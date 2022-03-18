@@ -3,9 +3,17 @@
 #include "common/runnable.hpp"
 #include "common/common_flags.hpp"
 #include "fixture_scenario_attorney.hpp"
+#include "fixture_before_each_attorney.hpp"
+#include "fixture_after_each_attorney.hpp"
+#include "fixture_before_attorney.hpp"
+#include "fixture_after_attorney.hpp"
 
 namespace SPUnit {
     class Scenario;
+    class BeforeEach;
+    class AfterEach;
+    class After;
+    class Before;
     class Fixture: public Runnable {
     public:
         using Flags = CommonFlags;
@@ -17,9 +25,21 @@ namespace SPUnit {
         friend class Internal::FixtureScenarioAttorney;
         void addScenario(const Scenario& scenario);
         void addFixture(const Fixture& fixture);
+    private:
+        friend class Internal::FixtureBeforeEachAttorney;
+        void addBeforeEach(const BeforeEach& beforeEach);
+    private:
+        friend class Internal::FixtureAfterEachAttorney;
+        void addAfterEach(const AfterEach& afterEach);
+    private:
+        friend class Internal::FixtureBeforeAttorney;
+        void addBefore(const Before& before);
+    private:
+        friend class Internal::FixtureAfterAttorney;
+        void addAfter(const After& after);
     protected:
-        void run(Reporter& reporter, OutputStream& stream) const override;
-        static void run(const Runnable* runnable, Reporter& reporter, OutputStream& stream);
+        void run(Reporter& reporter) const override;
+        static void run(const Runnable* runnable, Reporter& reporter);
         Fixture();
     private:
         const Fixture* const _parent;
@@ -30,6 +50,10 @@ namespace SPUnit {
     protected:
         using RunnableList = std::list<const Runnable*>;
         RunnableList _runnables;
+        RunnableList _beforeEachs;
+        RunnableList _afterEachs;
+        RunnableList _befores;
+        RunnableList _afters;
     };
 
     extern ::SPUnit::Fixture* const _spunit_fixture;

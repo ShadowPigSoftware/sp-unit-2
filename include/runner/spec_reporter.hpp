@@ -1,16 +1,15 @@
 #pragma once
 
-#include "reporter.hpp"
+#include "null_reporter.hpp"
 
 namespace SPUnit {    
-    class SpecReporter: public Reporter {
+    class SpecReporter: public NullReporter {
     public:
-        void beginFixture(const Fixture& fixture, OutputStream& stream) override;
-        void endFixture(const Fixture& fixture, OutputStream& stream) override;
-        void beginScenario(const Scenario& scenario, OutputStream& stream) override;
-        void endScenario(const Scenario& scenario, OutputStream& stream) override;
+        void beginFixture(const Fixture& fixture) override;
+        void endFixture(const Fixture& fixture) override;
+        void endScenario(const Scenario& scenario) override;
     private:
-        void printIndent(OutputStream& stream);
+        void printIndent();
         uint32_t indent = 0;
     };
 }

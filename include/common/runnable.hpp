@@ -9,6 +9,6 @@ namespace SPUnit {
         virtual ~Runnable() = default;
     protected:
         friend class Fixture; //The Fixture class is allowed to run any runnable;
-        virtual void run(Reporter& reporter, OutputStream& stream) const = 0;
+        virtual void run(Reporter& reporter) const = 0;
     };
 }

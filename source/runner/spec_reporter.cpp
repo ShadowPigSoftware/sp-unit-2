@@ -4,29 +4,25 @@
 #include "scenario/scenario.hpp"
 
 namespace SPUnit {    
-    void SpecReporter::beginFixture(const Fixture& fixture, OutputStream& stream) {
-        printIndent(stream);
-        stream << fixture.description() << stream.endl;
+    void SpecReporter::beginFixture(const Fixture& fixture) {
+        printIndent();
+        stream() << fixture.description() << stream().endl;
         ++indent;
     }
         
-    void SpecReporter::endFixture(const Fixture& fixture, OutputStream& stream) {
-        Internal::unused(fixture, stream);
+    void SpecReporter::endFixture(const Fixture& fixture) {
+        Internal::unused(fixture);
         --indent;
     }
-
-    void SpecReporter::beginScenario(const Scenario& scenario, OutputStream& stream) {
-        Internal::unused(scenario, stream);
-    }
     
-    void SpecReporter::endScenario(const Scenario& scenario, OutputStream& stream) {
-        stream << scenario.description() << stream.endl;
+    void SpecReporter::endScenario(const Scenario& scenario) {
+        stream() << scenario.description() << stream().endl;
     }
 
-    void SpecReporter::printIndent(OutputStream& stream)
+    void SpecReporter::printIndent()
     {
         for (uint32_t i = 0; i < indent; ++i) {
-            stream << "  ";
+            stream() << "  ";
         }
     }
 }

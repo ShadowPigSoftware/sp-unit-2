@@ -2,16 +2,17 @@
 #include "fixture/fixture_scenario_attorney.hpp"
 #include "runner/reporter.hpp"
 #include "runner/output_stream.hpp"
+#include "runner/stream_reporter_attorney.hpp"
 
 namespace SPUnit {
-    Scenario::Scenario(Fixture* parent, const char* description, Function function, const char* file, uint32_t line): 
-        Scenario {parent, description, function, Flags {}, file, line}
+    Scenario::Scenario(Fixture* parent, const char* description, Delegate& delegate, const char* file, uint32_t line): 
+        Scenario {parent, description, delegate, Flags {}, file, line}
     {}
     
-    Scenario::Scenario(Fixture* parent, const char* description, Function function, const Flags& flags, const char* file, uint32_t line):
+    Scenario::Scenario(Fixture* parent, const char* description, Delegate& delegate, const Flags& flags, const char* file, uint32_t line):
         _parent {parent},
         _description {description},
-        _function {function},
+        _delegate {delegate},
         _flags {flags},
         _file {file},
         _line {line}
@@ -19,11 +20,11 @@ namespace SPUnit {
         Internal::FixtureScenarioAttorney::addScenario(*parent, *this);
     }
     
-    void Scenario::run(Reporter& reporter, OutputStream& stream) const
+    void Scenario::run(Reporter& reporter) const
     {
-        reporter.beginScenario(*this, stream);
-        _function();
-        reporter.endScenario(*this, stream);
+        reporter.beginScenario(*this);
+        _delegate.function({reporter, Internal::StreamReporterAttorney::stream(reporter)});
+        reporter.endScenario(*this);
     }
 
     const char* Scenario::description() const {

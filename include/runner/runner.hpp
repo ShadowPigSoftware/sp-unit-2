@@ -11,6 +11,5 @@ namespace SPUnit {
         int run();
     private:
         Reporter* _reporter;
-        OutputStream* _outputStream;
     };
 }

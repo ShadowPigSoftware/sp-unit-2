@@ -8,7 +8,7 @@ namespace SPUnit {
     public:
         GlobalFixture();
     private:
-        void run(Reporter& reporter, OutputStream& stream) const override;
+        void run(Reporter& reporter) const override;
     };
     
     //reference for the global fixture (nullptr)
