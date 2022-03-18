@@ -3,26 +3,26 @@
 
 fixture("This is a simple fixture") {
     before() {
-        spunit.stream << "Before" << spunit.stream.endl;
+        spunit.stream << spunit.stream.grey << "Before" << spunit.stream.reset << spunit.stream.endl;
     }
 
     after() {
-        spunit.stream << "After" << spunit.stream.endl;
+        spunit.stream << spunit.stream.white << "After" << spunit.stream.reset << spunit.stream.endl;
     }
 
     beforeEach() {
-        spunit.stream << "Before Each" << spunit.stream.endl;
+        spunit.stream << spunit.stream.yellow << "Before Each" << spunit.stream.endl;
     }
 
     afterEach() {
-        spunit.stream << "After Each" << spunit.stream.endl;
+        spunit.stream << spunit.stream.blue << "After Each" << spunit.stream.endl;
     }
 
-    scenario(skip, "This is a simple scenario") {
-        spunit.stream << "running scenario" << spunit.stream.endl;
+    scenario("This is a simple scenario") {
+        spunit.stream << spunit.stream.cyan << "running scenario" << spunit.stream.endl;
     }
     
     scenario("This is a second scenario") {
-        spunit.stream << "running second scenario" << spunit.stream.endl;
+        spunit.stream << spunit.stream.magenta << "running second scenario" << spunit.stream.endl;
     }
 }

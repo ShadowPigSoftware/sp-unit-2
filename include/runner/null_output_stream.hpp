@@ -17,6 +17,7 @@ namespace SPUnit {
         NullOutputStream& operator<< (long double value) override;
         NullOutputStream& operator<< (const char* value) override;
         NullOutputStream& operator<< (void* value) override;
+        NullOutputStream& operator<< (Color value) override;
         NullOutputStream& operator<< (Manipulator value) override;
     };
 }

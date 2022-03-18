@@ -3,6 +3,10 @@
 #include <iostream>
 
 namespace SPUnit {    
+    CoutOutputStream::CoutOutputStream(const CoutOutputStreamColorSupport& colorSupport):
+        _colorSupport {colorSupport}
+    {}
+
     CoutOutputStream& CoutOutputStream::operator<< (bool value) {
         std::cout << value;
         return *this;
@@ -60,6 +64,11 @@ namespace SPUnit {
 
     CoutOutputStream& CoutOutputStream::operator<< (void* value) {
         std::cout << value;
+        return *this;
+    }
+
+    CoutOutputStream& CoutOutputStream::operator<< (Color value) {
+        _colorSupport.processColor(value, *this);
         return *this;
     }
 

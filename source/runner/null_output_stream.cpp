@@ -63,6 +63,11 @@ namespace SPUnit {
         return *this;
     }
 
+    NullOutputStream& NullOutputStream::operator<< (Color value) {
+        Internal::unused(value);
+        return *this;
+    }
+
     NullOutputStream& NullOutputStream::operator<< (Manipulator value) {
         Internal::unused(value);
         return *this;
