@@ -1,14 +1,23 @@
 #pragma once
 
+#include "common_flags.hpp"
+
 namespace SPUnit {
     class Reporter;
-    class OutputStream;
+    class Fixture;
 
     class Runnable {
+        friend class Fixture; //The Fixture class is access any runnable;
     public:
-        virtual ~Runnable() = default;
+        using Flags = CommonFlags;
     protected:
-        friend class Fixture; //The Fixture class is allowed to run any runnable;
+        Runnable(Fixture* parent, const Flags& flags, const char* file, uint32_t line);
+        virtual ~Runnable() = default;
+        
         virtual void run(Reporter& reporter) const = 0;
+        const Fixture* const _parent;
+        const Flags _flags;
+        const char* const _file;
+        const uint32_t _line;
     };
 }

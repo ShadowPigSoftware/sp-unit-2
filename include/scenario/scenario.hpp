@@ -17,11 +17,7 @@ namespace SPUnit {
     private:
         void run(Reporter& reporter) const override;
     private:
-        const Fixture* const _parent;
         const char* const _description;
         Delegate& _delegate;
-        const Flags _flags;
-        const char* const _file;
-        const uint32_t _line;
     };
 }

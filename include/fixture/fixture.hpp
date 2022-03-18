@@ -42,11 +42,7 @@ namespace SPUnit {
         static void run(const Runnable* runnable, Reporter& reporter);
         Fixture();
     private:
-        const Fixture* const _parent;
         const char* const _description;
-        const Flags _flags;
-        const char* const _file;
-        const uint32_t _line;
     protected:
         using RunnableList = std::list<const Runnable*>;
         RunnableList _runnables;

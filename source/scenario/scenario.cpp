@@ -10,21 +10,24 @@ namespace SPUnit {
     {}
     
     Scenario::Scenario(Fixture* parent, const char* description, Delegate& delegate, const Flags& flags, const char* file, uint32_t line):
-        _parent {parent},
+        Runnable {parent, flags, file, line},
         _description {description},
-        _delegate {delegate},
-        _flags {flags},
-        _file {file},
-        _line {line}
+        _delegate {delegate}
     {
         Internal::FixtureScenarioAttorney::addScenario(*parent, *this);
     }
     
     void Scenario::run(Reporter& reporter) const
     {
-        reporter.beginScenario(*this);
-        _delegate.function({reporter, Internal::StreamReporterAttorney::stream(reporter)});
-        reporter.endScenario(*this);
+        if (_flags.contains(_flags.skip)) {
+            reporter.skipScenario(*this);
+        }
+        else
+        {
+            reporter.beginScenario(*this);
+            _delegate.function({reporter, Internal::StreamReporterAttorney::stream(reporter)});
+            reporter.endScenario(*this);
+        }
     }
 
     const char* Scenario::description() const {

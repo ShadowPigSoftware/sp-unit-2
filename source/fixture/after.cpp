@@ -15,8 +15,14 @@ namespace SPUnit {
     }
 
     void After::run(Reporter& reporter) const {
-        reporter.beginAfter(*this);
-        _delegate.function({reporter, Internal::StreamReporterAttorney::stream(reporter)});
-        reporter.endAfter(*this);
+        if (_flags.contains(_flags.skip)) {
+            reporter.skipAfter(*this);
+        }
+        else
+        {
+            reporter.beginAfter(*this);
+            _delegate.function({reporter, Internal::StreamReporterAttorney::stream(reporter)});
+            reporter.endAfter(*this);
+        }
     }
 }

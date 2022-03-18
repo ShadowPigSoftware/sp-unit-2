@@ -1,4 +1,5 @@
 SPUNIT_SOURCE_FILES +=	$(SPUNIT_SOURCE_DIRECTORY)/common/common_flags.cpp\
+						$(SPUNIT_SOURCE_DIRECTORY)/common/runnable.cpp\
 						$(SPUNIT_SOURCE_DIRECTORY)/fixture/fixture.cpp\
 						$(SPUNIT_SOURCE_DIRECTORY)/fixture/global_fixture.cpp\
 						$(SPUNIT_SOURCE_DIRECTORY)/fixture/fixture_section.cpp\

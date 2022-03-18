@@ -18,7 +18,7 @@ fixture("This is a simple fixture") {
         spunit.stream << "After Each" << spunit.stream.endl;
     }
 
-    scenario("This is a simple scenario") {
+    scenario(skip, "This is a simple scenario") {
         spunit.stream << "running scenario" << spunit.stream.endl;
     }
     

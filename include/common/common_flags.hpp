@@ -12,6 +12,10 @@ namespace SPUnit {
 
         const_iterator begin() const;
         const_iterator end() const;
+
+        bool contains(const char* value) const;
+
+        static constexpr const char* skip = "skip";
     private:
         FlagList _flags;
     };
