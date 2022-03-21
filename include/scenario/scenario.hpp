@@ -19,6 +19,7 @@ namespace SPUnit {
         const char* description() const;
 
         const ScenarioStatus& status() const;
+        void fail(const std::string& error, const char* file, uint32_t line);
     private:
         void run(Reporter& reporter) const override;
     private:

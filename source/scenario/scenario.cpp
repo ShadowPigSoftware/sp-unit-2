@@ -26,9 +26,7 @@ namespace SPUnit {
         else
         {
             reporter.beginScenario(*this);
-            _delegate.spunit.reporter = reporter;
-            _delegate.spunit.stream = Internal::StreamReporterAttorney::stream(reporter);
-            _delegate.function();
+            _delegate.function(reporter, Internal::StreamReporterAttorney::stream(reporter));
             reporter.endScenario(*this);
         }
     }
@@ -39,5 +37,9 @@ namespace SPUnit {
 
     const ScenarioStatus& Scenario::status() const {
         return _status;
+    }
+
+    void Scenario::fail(const std::string& error, const char* file, uint32_t line) {
+        _status = ScenarioStatus {error, file, line};
     }
 }

@@ -21,7 +21,7 @@ namespace SPUnit {
         else
         {
             reporter.beginAfterEach(*this);
-            _delegate.function({reporter, Internal::StreamReporterAttorney::stream(reporter)});
+            _delegate.function(reporter, Internal::StreamReporterAttorney::stream(reporter));
             reporter.endAfterEach(*this);
         }
     }

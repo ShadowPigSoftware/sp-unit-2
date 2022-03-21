@@ -8,6 +8,7 @@ namespace SPUnit {
         using Utilities = DelegateUtilities;
         virtual ~Delegate() = default;
         virtual void function() const = 0;
+        void function(Reporter& reporter, OutputStream& stream);
     public:
         Utilities spunit;
     };
