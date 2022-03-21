@@ -14,7 +14,7 @@ namespace SPUnit {
         Internal::FixtureAfterEachAttorney::addAfterEach(*parent, *this);
     }
 
-    void AfterEach::run(Reporter& reporter) const {
+    void AfterEach::run(Reporter& reporter) {
         if (_flags.contains(_flags.skip)) {
             reporter.skipAfterEach(*this);
         }

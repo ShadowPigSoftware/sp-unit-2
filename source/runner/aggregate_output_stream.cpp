@@ -54,6 +54,11 @@ namespace SPUnit {
         return *this;
     }
 
+    AggregateOutputStream& AggregateOutputStream::operator<< (std::size_t value) {
+        (*_outputStream) << value;
+        return *this;
+    }
+
     AggregateOutputStream& AggregateOutputStream::operator<< (float value) {
         (*_outputStream) << value;
         return *this;

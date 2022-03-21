@@ -14,7 +14,7 @@ namespace SPUnit {
         Internal::FixtureAfterAttorney::addAfter(*parent, *this);
     }
 
-    void After::run(Reporter& reporter) const {
+    void After::run(Reporter& reporter) {
         if (_flags.contains(_flags.skip)) {
             reporter.skipAfter(*this);
         }

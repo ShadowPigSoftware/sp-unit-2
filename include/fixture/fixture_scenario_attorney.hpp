@@ -11,7 +11,7 @@ namespace SPUnit {
             friend class Scenario;
             friend class Fixture;
         public:
-            static void addScenario(Fixture& fixture, const Scenario& scenario);
+            static void addScenario(Fixture& fixture, Scenario& scenario);
         };
     }
 }

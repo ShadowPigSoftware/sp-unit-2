@@ -18,7 +18,7 @@ namespace SPUnit {
         Internal::FixtureScenarioAttorney::addScenario(*parent, *this);
     }
     
-    void Scenario::run(Reporter& reporter) const
+    void Scenario::run(Reporter& reporter)
     {
         if (_flags.contains(_flags.skip)) {
             reporter.skipScenario(*this);
@@ -26,7 +26,7 @@ namespace SPUnit {
         else
         {
             reporter.beginScenario(*this);
-            _delegate.function(reporter, Internal::StreamReporterAttorney::stream(reporter));
+            _delegate.function(*this, reporter, Internal::StreamReporterAttorney::stream(reporter));
             reporter.endScenario(*this);
         }
     }
@@ -39,7 +39,7 @@ namespace SPUnit {
         return _status;
     }
 
-    void Scenario::fail(const std::string& error, const char* file, uint32_t line) {
-        _status = ScenarioStatus {error, file, line};
+    void Scenario::fail(const std::string& error, uint32_t line) {
+        _status = ScenarioStatus {error, _file, line};
     }
 }

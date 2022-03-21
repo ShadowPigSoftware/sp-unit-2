@@ -3,8 +3,10 @@
 
 fixture("This is a simple fixture") {
     scenario("This is a simple scenario") {
+       // spunit.fail("Failure message", __LINE__);
     }
     
     scenario("This is a second scenario") {
+        //spunit.fail("Another failure message", __LINE__);
     }
 }

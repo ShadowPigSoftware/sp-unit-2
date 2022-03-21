@@ -18,6 +18,7 @@ namespace SPUnit {
         virtual OutputStream& operator<< (unsigned int value) = 0;
         virtual OutputStream& operator<< (long value) = 0;
         virtual OutputStream& operator<< (unsigned long value) = 0;
+        virtual OutputStream& operator<< (std::size_t value) = 0;
         virtual OutputStream& operator<< (float value) = 0;
         virtual OutputStream& operator<< (double value) = 0;
         virtual OutputStream& operator<< (long double value) = 0;

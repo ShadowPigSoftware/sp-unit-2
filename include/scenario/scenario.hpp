@@ -2,8 +2,8 @@
 
 #include "common/runnable.hpp"
 #include "common/common_flags.hpp"
-#include "common/delegate.hpp"
 
+#include "scenario_delegate.hpp"
 #include "scenario_status.hpp"
 
 namespace SPUnit {
@@ -11,7 +11,7 @@ namespace SPUnit {
     class Scenario: public Runnable {
     public:
         using Flags = CommonFlags;
-        using Delegate = ::SPUnit::Delegate;
+        using Delegate = ScenarioDelegate;
         using Status = ScenarioStatus::Status;
         Scenario(Fixture* parent, const char* description, Delegate& delegate, const char* file, uint32_t line);
         Scenario(Fixture* parent, const char* description, Delegate& delegate, const Flags& flags, const char* file, uint32_t line);
@@ -19,9 +19,9 @@ namespace SPUnit {
         const char* description() const;
 
         const ScenarioStatus& status() const;
-        void fail(const std::string& error, const char* file, uint32_t line);
+        void fail(const std::string& error, uint32_t line);
     private:
-        void run(Reporter& reporter) const override;
+        void run(Reporter& reporter) override;
     private:
         const char* const _description;
         Delegate& _delegate;

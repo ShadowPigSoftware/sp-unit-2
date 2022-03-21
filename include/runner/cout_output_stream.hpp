@@ -20,6 +20,7 @@ namespace SPUnit {
         CoutOutputStream& operator<< (unsigned int value) override;
         CoutOutputStream& operator<< (long value) override;
         CoutOutputStream& operator<< (unsigned long value) override;
+        CoutOutputStream& operator<< (std::size_t value) override;
         CoutOutputStream& operator<< (float value) override;
         CoutOutputStream& operator<< (double value) override;
         CoutOutputStream& operator<< (long double value) override;

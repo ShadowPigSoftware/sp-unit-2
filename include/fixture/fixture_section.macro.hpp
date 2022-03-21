@@ -9,7 +9,7 @@
 
 #define _SPUNIT_FIXTURE_SECTION_DELEGATE_DECLARATION(name, className, id)\
     class _SPUNIT_FIXTURE_SECTION_DELEGATE_CLASS_NAME(name, id): public ::SPUnit::className::Delegate {\
-        void function(const Utilities& spunit) override;\
+        void function() override;\
     };\
     _SPUNIT_FIXTURE_SECTION_DELEGATE_CLASS_NAME(name, id) _SPUNIT_FIXTURE_SECTION_DELEGATE_NAME(name, id);
 
@@ -17,12 +17,12 @@
 #define _SPUNIT_FIXURE_SECTION_FLAGS(name, className, id,...)\
     _SPUNIT_FIXTURE_SECTION_DELEGATE_DECLARATION(name, className, id)\
     ::SPUnit::className _SPUNIT_FIXTURE_SECTION_NAME(name, id)= {_spunit_fixture, _SPUNIT_FIXTURE_SECTION_DELEGATE_NAME(name, id), __VA_ARGS__, __FILE__, __LINE__};\
-    void _SPUNIT_FIXTURE_SECTION_DELEGATE_CLASS_NAME(name, id)::function(const Utilities& spunit)
+    void _SPUNIT_FIXTURE_SECTION_DELEGATE_CLASS_NAME(name, id)::function()
 
 #define _SPUNIT_BEFORE_EACH3(name, className, id)\
     _SPUNIT_FIXTURE_SECTION_DELEGATE_DECLARATION(name, className, id)\
     ::SPUnit::className _SPUNIT_FIXTURE_SECTION_NAME(name, id)= {_spunit_fixture, _SPUNIT_FIXTURE_SECTION_DELEGATE_NAME(name, id), __FILE__, __LINE__};\
-    void _SPUNIT_FIXTURE_SECTION_DELEGATE_CLASS_NAME(name, id)::function(const Utilities& spunit)
+    void _SPUNIT_FIXTURE_SECTION_DELEGATE_CLASS_NAME(name, id)::function()
 
 #define _SPUNIT_FIXTURE_SECTION4(name, className, id, f) _SPUNIT_FIXURE_SECTION_FLAGS(name, className, id, {#f})
 #define _SPUNIT_FIXTURE_SECTION5(name, className, id, f1, f2) _SPUNIT_FIXURE_SECTION_FLAGS(name, className, id, {#f1, #f2})

@@ -2,7 +2,7 @@
 #include "fixture/fixture.hpp"
 
 namespace SPUnit::Internal {
-    void FixtureScenarioAttorney::addScenario(Fixture& fixture, const Scenario& scenario) {
+    void FixtureScenarioAttorney::addScenario(Fixture& fixture, Scenario& scenario) {
         fixture.addScenario(scenario);
     }
 }

@@ -2,7 +2,7 @@
 #include "fixture/fixture.hpp"
 
 namespace SPUnit::Internal {
-    void FixtureBeforeEachAttorney::addBeforeEach(Fixture& fixture, const BeforeEach& beforeEach) {
+    void FixtureBeforeEachAttorney::addBeforeEach(Fixture& fixture, BeforeEach& beforeEach) {
         fixture.addBeforeEach(beforeEach);
     }
 }

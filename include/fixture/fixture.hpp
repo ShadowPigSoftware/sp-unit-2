@@ -23,28 +23,28 @@ namespace SPUnit {
         const char* description() const;
     private:
         friend class Internal::FixtureScenarioAttorney;
-        void addScenario(const Scenario& scenario);
-        void addFixture(const Fixture& fixture);
+        void addScenario(Scenario& scenario);
+        void addFixture(Fixture& fixture);
     private:
         friend class Internal::FixtureBeforeEachAttorney;
-        void addBeforeEach(const BeforeEach& beforeEach);
+        void addBeforeEach(BeforeEach& beforeEach);
     private:
         friend class Internal::FixtureAfterEachAttorney;
-        void addAfterEach(const AfterEach& afterEach);
+        void addAfterEach(AfterEach& afterEach);
     private:
         friend class Internal::FixtureBeforeAttorney;
-        void addBefore(const Before& before);
+        void addBefore(Before& before);
     private:
         friend class Internal::FixtureAfterAttorney;
-        void addAfter(const After& after);
+        void addAfter(After& after);
     protected:
-        void run(Reporter& reporter) const override;
-        static void run(const Runnable* runnable, Reporter& reporter);
+        void run(Reporter& reporter) override;
+        static void run(Runnable* runnable, Reporter& reporter);
         Fixture();
     private:
         const char* const _description;
     protected:
-        using RunnableList = std::list<const Runnable*>;
+        using RunnableList = std::list<Runnable*>;
         RunnableList _runnables;
         RunnableList _beforeEachs;
         RunnableList _afterEachs;

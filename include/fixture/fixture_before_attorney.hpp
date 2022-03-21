@@ -11,7 +11,7 @@ namespace SPUnit {
             friend class Before;
             friend class Fixture;
         public:
-            static void addBefore(Fixture& fixture, const Before& before);
+            static void addBefore(Fixture& fixture, Before& before);
         };
     }
 }

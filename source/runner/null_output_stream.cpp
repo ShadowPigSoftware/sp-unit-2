@@ -38,6 +38,11 @@ namespace SPUnit {
         return *this;
     }
 
+    NullOutputStream& NullOutputStream::operator<< (std::size_t value) {
+        Internal::unused(value);
+        return *this;
+    }
+
     NullOutputStream& NullOutputStream::operator<< (float value) {
         Internal::unused(value);
         return *this;

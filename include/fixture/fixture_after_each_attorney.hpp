@@ -11,7 +11,7 @@ namespace SPUnit {
             friend class AfterEach;
             friend class Fixture;
         public:
-            static void addAfterEach(Fixture& fixture, const AfterEach& afterEach);
+            static void addAfterEach(Fixture& fixture, AfterEach& afterEach);
         };
     }
 }

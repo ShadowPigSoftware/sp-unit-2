@@ -14,7 +14,7 @@ namespace SPUnit {
         Internal::FixtureBeforeAttorney::addBefore(*parent, *this);
     }
 
-    void Before::run(Reporter& reporter) const {
+    void Before::run(Reporter& reporter) {
         if (_flags.contains(_flags.skip)) {
             reporter.skipBefore(*this);
         }

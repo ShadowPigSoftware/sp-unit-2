@@ -14,7 +14,7 @@ namespace SPUnit {
         Runnable(Fixture* parent, const Flags& flags, const char* file, uint32_t line);
         virtual ~Runnable() = default;
         
-        virtual void run(Reporter& reporter) const = 0;
+        virtual void run(Reporter& reporter) = 0;
         const Fixture* const _parent;
         const Flags _flags;
         const char* const _file;

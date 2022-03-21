@@ -42,6 +42,11 @@ namespace SPUnit {
         return *this;
     }
 
+    CoutOutputStream& CoutOutputStream::operator<< (std::size_t value) {
+        std::cout << value;
+        return *this;
+    }
+
     CoutOutputStream& CoutOutputStream::operator<< (float value) {
         std::cout << value;
         return *this;

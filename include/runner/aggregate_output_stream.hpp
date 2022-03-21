@@ -16,6 +16,7 @@ namespace SPUnit {
         AggregateOutputStream& operator<< (unsigned int value) override;
         AggregateOutputStream& operator<< (long value) override;
         AggregateOutputStream& operator<< (unsigned long value) override;
+        AggregateOutputStream& operator<< (std::size_t value) override;
         AggregateOutputStream& operator<< (float value) override;
         AggregateOutputStream& operator<< (double value) override;
         AggregateOutputStream& operator<< (long double value) override;

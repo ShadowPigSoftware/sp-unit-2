@@ -2,7 +2,7 @@
 #include "fixture/fixture.hpp"
 
 namespace SPUnit::Internal {
-    void FixtureAfterAttorney::addAfter(Fixture& fixture, const After& after) {
+    void FixtureAfterAttorney::addAfter(Fixture& fixture, After& after) {
         fixture.addAfter(after);
     }
 }

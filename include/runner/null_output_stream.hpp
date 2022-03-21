@@ -12,6 +12,7 @@ namespace SPUnit {
         NullOutputStream& operator<< (unsigned int value) override;
         NullOutputStream& operator<< (long value) override;
         NullOutputStream& operator<< (unsigned long value) override;
+        NullOutputStream& operator<< (std::size_t value) override;
         NullOutputStream& operator<< (float value) override;
         NullOutputStream& operator<< (double value) override;
         NullOutputStream& operator<< (long double value) override;

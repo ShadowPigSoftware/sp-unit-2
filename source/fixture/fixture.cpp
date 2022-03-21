@@ -28,57 +28,57 @@ namespace SPUnit {
         return _description;
     }
 
-    void Fixture::addScenario(const Scenario& scenario) {
+    void Fixture::addScenario(Scenario& scenario) {
         _runnables.push_back(&scenario);
     }
 
-    void Fixture::addFixture(const Fixture& fixture) {
+    void Fixture::addFixture(Fixture& fixture) {
         _runnables.push_back(&fixture);
     }
 
-    void Fixture::addBeforeEach(const BeforeEach& beforeEach) {
+    void Fixture::addBeforeEach(BeforeEach& beforeEach) {
         _beforeEachs.push_back(&beforeEach);
     }
     
-    void Fixture::addAfterEach(const AfterEach& afterEach) {
+    void Fixture::addAfterEach(AfterEach& afterEach) {
         _afterEachs.push_back(&afterEach);
     }
 
-    void Fixture::addBefore(const Before& before) {
+    void Fixture::addBefore(Before& before) {
         _befores.push_back(&before);
     }
 
-    void Fixture::addAfter(const After& after) {
+    void Fixture::addAfter(After& after) {
         _afters.push_back(&after);
     }
 
-    void Fixture::run(Reporter& reporter) const {
+    void Fixture::run(Reporter& reporter) {
         if (_flags.contains(_flags.skip)) {
             reporter.skipFixture(*this);
         }
         else
         {
             reporter.beginFixture(*this);
-            for (const Runnable* before: _befores) {
+            for (Runnable* before: _befores) {
                 before->run(reporter);
             }
-            for (const Runnable* runnable: _runnables) {
-                for (const Runnable* beforeEach: _beforeEachs) {
+            for (Runnable* runnable: _runnables) {
+                for (Runnable* beforeEach: _beforeEachs) {
                     beforeEach->run(reporter);
                 }
                 runnable->run(reporter);
-                for (const Runnable* afterEach: _afterEachs) {
+                for (Runnable* afterEach: _afterEachs) {
                     afterEach->run(reporter);
                 }
             }
-            for (const Runnable* after: _afters) {
+            for (Runnable* after: _afters) {
                 after->run(reporter);
             }
             reporter.endFixture(*this);
         }
     }
 
-    void Fixture::run(const Runnable* runnable, Reporter& reporter) {
+    void Fixture::run(Runnable* runnable, Reporter& reporter) {
         runnable->run(reporter);
     }
 }

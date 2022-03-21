@@ -11,11 +11,17 @@ namespace SPUnit {
         void beginFixture(const Fixture& fixture) override;
         void endFixture(const Fixture& fixture) override;
         void endScenario(const Scenario& scenario) override;
+        void finalize() override;
     private:
+        void finalizeSuccess();
+        void finalizeFailure();
         void printIndent();
         const char* _tickSymbol;
         const char* _crossSymbol;
         uint32_t _indent;
         uint32_t _index;
+        uint32_t _scenarioCount;
+        using ScenarioList = std::list<const Scenario*>;
+        ScenarioList _failures;
     };
 }
