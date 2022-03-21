@@ -4,6 +4,7 @@
 #include "fixture/before.macro.hpp"
 #include "fixture/after.macro.hpp"
 #include "scenario/scenario.macro.hpp"
+#include "expect/expect.macro.hpp"
 
 #define fixture SPUNIT_FIXTURE
 #define scenario SPUNIT_SCENARIO
@@ -11,3 +12,4 @@
 #define afterEach SPUNIT_AFTER_EACH
 #define before SPUNIT_BEFORE
 #define after SPUNIT_AFTER
+#define expect SPUNIT_EXPECT

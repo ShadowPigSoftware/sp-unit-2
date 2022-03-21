@@ -1,6 +1,7 @@
 #pragma once
 
 #include "scenario_delegate_utilities.hpp"
+#include "expect/expect.hpp"
 
 namespace SPUnit {
     class Scenario;
