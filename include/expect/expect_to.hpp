@@ -2,6 +2,7 @@
 
 #include "spunit_core.hpp"
 #include "expect_scenario.hpp"
+#include "expect_failure_message.hpp"
 namespace SPUnit {
     class Scenario;
 
@@ -15,7 +16,7 @@ namespace SPUnit {
 
         template <class U> void equal(const U& expected) const {
             if (expected != _actual) {
-                ExpectScenario::fail(_scenario, "", _line);
+                ExpectScenario::fail(_scenario, ExpectFailureMessage::make(_actual, expected), _line);
             }
         }
     private:

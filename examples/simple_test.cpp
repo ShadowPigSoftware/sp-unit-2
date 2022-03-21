@@ -3,9 +3,7 @@
 
 fixture("This is a simple fixture") {
     scenario("This is a simple scenario") {
-        char* x = "test";
-        char* y = "test";
-        expect(x).to.equal(y);
+        expect(uint8_t(5)).to.equal(6);
        // spunit.fail("Failure message", __LINE__);
     }
     
