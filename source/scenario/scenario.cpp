@@ -12,7 +12,8 @@ namespace SPUnit {
     Scenario::Scenario(Fixture* parent, const char* description, Delegate& delegate, const Flags& flags, const char* file, uint32_t line):
         Runnable {parent, flags, file, line},
         _description {description},
-        _delegate {delegate}
+        _delegate {delegate},
+        _status {}
     {
         Internal::FixtureScenarioAttorney::addScenario(*parent, *this);
     }
@@ -25,12 +26,18 @@ namespace SPUnit {
         else
         {
             reporter.beginScenario(*this);
-            _delegate.function({reporter, Internal::StreamReporterAttorney::stream(reporter)});
+            _delegate.spunit.reporter = reporter;
+            _delegate.spunit.stream = Internal::StreamReporterAttorney::stream(reporter);
+            _delegate.function();
             reporter.endScenario(*this);
         }
     }
 
     const char* Scenario::description() const {
         return _description;
+    }
+
+    const ScenarioStatus& Scenario::status() const {
+        return _status;
     }
 }

@@ -1,18 +1,14 @@
 #pragma once
 
-#include "spunit_core.hpp"
+#include "delegate_utilities.hpp"
 
 namespace SPUnit {
-    class Reporter;
-    class OutputStream;
-
     class Delegate {
     public:
-        struct Utilities {
-            Reporter& reporter;
-            OutputStream& stream;
-        };
+        using Utilities = DelegateUtilities;
         virtual ~Delegate() = default;
-        virtual void function(const Utilities& utilities) = 0;
+        virtual void function() const = 0;
+    public:
+        Utilities spunit;
     };
 }

@@ -9,7 +9,7 @@
 
 #define _SPUNIT_SCENARIO_DELEGATE_DECLARATION(id)\
     class _SPUNIT_SCENARIO_DELEGATE_CLASS_NAME(id): public ::SPUnit::Scenario::Delegate {\
-        void function(const Utilities& spunit) override;\
+        void function() const override;\
     };\
     _SPUNIT_SCENARIO_DELEGATE_CLASS_NAME(id) _SPUNIT_SCENARIO_DELEGATE_NAME(id);
 
@@ -17,12 +17,12 @@
 #define _SPUNIT_SCENARIO_FLAGS(id, description,...)\
     _SPUNIT_SCENARIO_DELEGATE_DECLARATION(id)\
     ::SPUnit::Scenario _SPUNIT_SCENARIO_NAME(id)= {_spunit_fixture, description, _SPUNIT_SCENARIO_DELEGATE_NAME(id), __VA_ARGS__, __FILE__, __LINE__};\
-    void _SPUNIT_SCENARIO_DELEGATE_CLASS_NAME(id)::function(const Utilities& spunit)
+    void _SPUNIT_SCENARIO_DELEGATE_CLASS_NAME(id)::function() const
 
 #define _SPUNIT_SCENARIO2(id, description)\
     _SPUNIT_SCENARIO_DELEGATE_DECLARATION(id)\
     ::SPUnit::Scenario _SPUNIT_SCENARIO_NAME(id)= {_spunit_fixture, description, _SPUNIT_SCENARIO_DELEGATE_NAME(id), __FILE__, __LINE__};\
-    void _SPUNIT_SCENARIO_DELEGATE_CLASS_NAME(id)::function(const Utilities& spunit)
+    void _SPUNIT_SCENARIO_DELEGATE_CLASS_NAME(id)::function() const
 
 #define _SPUNIT_SCENARIO3(id, f, description) _SPUNIT_SCENARIO_FLAGS(id, description, {#f})
 #define _SPUNIT_SCENARIO4(id, f1, f2, description) _SPUNIT_SCENARIO_FLAGS(id, description, {#f1, #f2})
