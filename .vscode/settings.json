@@ -62,5 +62,6 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "spunit-macros": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "Enabled"
 }

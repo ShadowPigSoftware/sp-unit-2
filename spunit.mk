@@ -19,3 +19,6 @@ include $(SPUNIT_DIRECTORY)make/debug.mk
 include $(SPUNIT_DIRECTORY)make/release.mk
 include $(SPUNIT_DIRECTORY)make/examples.mk
 include $(SPUNIT_DIRECTORY)make/clean.mk
+
+-include $(SPUNIT_DEPENDENCY_FILES)
+-include $(SPUNIT_EXAMPLE_DEPENDENCY_FILES)
