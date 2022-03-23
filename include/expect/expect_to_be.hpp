@@ -7,15 +7,14 @@
 #include "expect_greater_than.hpp"
 #include "expect_less_than_or_equal.hpp"
 #include "expect_greater_than_or_equal.hpp"
-
-#include <iostream>
+#include "types/expect_type.hpp"
 
 namespace SPUnit {
     class Scenario;
 
     template <class T> class ExpectToBe {
     public:
-        ExpectToBe(Scenario& scenario, uint32_t line, T actual):
+        ExpectToBe(Scenario& scenario, uint32_t line, typename ExpectType<T>::ParameterType actual):
             _scenario {scenario},
             _line {line},
             _actual {actual}
@@ -47,6 +46,6 @@ namespace SPUnit {
     private:
         Scenario& _scenario; 
         uint32_t _line;
-        T _actual;
+        typename ExpectType<T>::StorageType _actual;
     };
 }

@@ -2,8 +2,6 @@
 #include "runner/cout_output_stream.hpp"
 #include "runner/spec_reporter.hpp"
 
-#include <iostream>
-
 namespace {
     ::SPUnit::SpecReporter defaultReporter;
     ::SPUnit::CoutOutputStream defaultOutputStream;

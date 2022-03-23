@@ -1,7 +1,5 @@
 #include "runner/cout_output_stream.hpp"
 
-#include <iostream>
-
 namespace SPUnit {    
     CoutOutputStream::CoutOutputStream(const CoutOutputStreamColorSupport& colorSupport):
         _colorSupport {colorSupport}

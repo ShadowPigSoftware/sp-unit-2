@@ -7,14 +7,14 @@
 
 namespace SPUnit {
 
-   template <> class ExpectFailureType<const char*> {
+   template <> class ExpectFailureStreamableType<const char*> {
     public:
         static void stream(std::stringstream& ss, const char* value) {
             ss << "\"" << value << "\"";
         }
     };
 
-    template <int L> class ExpectFailureType<char[L]> {
+    template <int L> class ExpectFailureStreamableType<char[L]> {
     public:
         static void stream(std::stringstream& ss, const char* value) {
             ss << "\"" << value << "\"";

@@ -3,15 +3,14 @@
 #include "spunit_core.hpp"
 #include "expect_comparison.hpp"
 #include "expect_threshold.hpp"
-
-#include <iostream>
+#include "types/expect_type.hpp"
 
 namespace SPUnit {
     class Scenario;
 
     template <class TActual, class TThreshold> class ExpectToBeWithin {
     public:
-        ExpectToBeWithin(Scenario& scenario, uint32_t line, TActual actual, TThreshold threshold):
+        ExpectToBeWithin(Scenario& scenario, uint32_t line, typename ExpectType<TActual>::ParameterType actual, typename ExpectType<TThreshold>::ParameterType threshold):
             _scenario {scenario},
             _line {line},
             _actual {actual},
@@ -24,7 +23,7 @@ namespace SPUnit {
     private:
         Scenario& _scenario; 
         uint32_t _line;
-        TActual _actual;
-        TThreshold _threshold;
+        typename ExpectType<TActual>::StorageType _actual;
+        typename ExpectType<TThreshold>::StorageType _threshold;
     };
 }

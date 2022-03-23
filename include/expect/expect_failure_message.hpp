@@ -63,5 +63,14 @@ namespace SPUnit {
             ExpectFailureType<TExpected>::stream(ss, expected);
             return ss.str();
         }
+
+        template <class TActual, class TContain> static std::string makeContain(const TActual& actual, const TContain& contain) {
+            std::stringstream ss;
+            ss << "Expected ";
+            ExpectFailureType<TActual>::stream(ss, actual);
+            ss << " to contain ";
+            ExpectFailureType<TContain>::stream(ss, contain);
+            return ss.str();
+        }
     };
 }

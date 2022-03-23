@@ -1,7 +1,5 @@
 #include "runner/null_output_stream.hpp"
 
-#include <iostream>
-
 namespace SPUnit {    
     NullOutputStream& NullOutputStream::operator<< (bool value) {
         Internal::unused(value);
