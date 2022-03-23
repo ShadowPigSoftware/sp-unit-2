@@ -12,22 +12,4 @@ namespace SPUnit {
             ss << static_cast<int>(value);
         }
     };
-
-    template <int L> class ExpectFailureStreamableType<uint8_t[L]> {
-    public:
-        using Array = uint8_t[L];
-        static void stream(std::stringstream& ss, const Array& value) {
-            bool comma = false;
-            ss << "{";
-            for (auto item: value) {
-                if (comma) {
-                    ss << ",";
-                } else {
-                    comma = true;
-                }
-                ss << static_cast<int>(item);
-            }
-            ss << "}";
-        }
-    };
 }

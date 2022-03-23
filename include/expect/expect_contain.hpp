@@ -37,7 +37,7 @@ namespace SPUnit {
         public:
             using ConstBeginSupported = ExpectContainTest::ConstBeginSupported<TActual>;
             using ConstEndSupported = ExpectContainTest::ConstEndSupported<TActual>;
-            using BeginEndComparableSupported = ExpectDifferenceTest::supported<decltype(std::begin(std::declval<const TActual&>())), decltype(std::begin(std::declval<const TActual&>()))>;
+            using BeginEndComparableSupported = std::false_type;
             using IteratorValueComparable = std::false_type;
             using PreIncrementSupported = std::false_type;
             using DereferenceSupported = std::false_type;
@@ -82,40 +82,60 @@ namespace SPUnit {
             using DereferenceSupported = typename Internal::DereferenceSupported<void>;
         };
 
-        template <class TActual, class TContain> using supported = std::bool_constant<
+        template <class TActual, class TContain> using iterableSupported = std::bool_constant<
             IterableTest<TActual, TContain>::ConstBeginSupported::value &&
             IterableTest<TActual, TContain>::ConstEndSupported::value &&
             IterableTest<TActual, TContain>::BeginEndComparableSupported::value &&
-            IterableTest<TActual, TContain>::IteratorValueComparable::value &&
             IterableTest<TActual, TContain>::PreIncrementSupported::value &&
             IterableTest<TActual, TContain>::DereferenceSupported::value
         >;
+
+        template <class TActual, class TContain> using iteratorValueCompareSupported = typename IterableTest<TActual, TContain>::IteratorValueComparable;
     };
 
-    
-    template <class TActual, class TContain, class Enabler = void> class ExpectContain {
-    public:
-        using TActualParameterType = typename ExpectType<TActual>::ParameterType;
-        using TContainParameterType = typename ExpectType<TContain>::ParameterType;
-        static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value) {
-            Internal::unused(actual, value);
-            ExpectScenario::fail(scenario, "Cannot iterate over object", line);
-        }
-    };
-
-    template <class TActual, class TContain> class ExpectContain<TActual, TContain, typename std::enable_if<ExpectContainTest::supported<TActual, TContain>::value>::type> {
+    template <class TActual, class TContain, class Enabler = void> class ExpectContainIterator {
     public:
         using TActualParameterType = typename ExpectType<TActual>::ParameterType;
         using TContainParameterType = typename ExpectType<TContain>::ParameterType;
         
         static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value) {
             Internal::unused(actual, value);
+            ExpectScenario::fail(scenario, ExpectFailureMessage::makeContainValueNotComparable(actual, value), line);
+        }
+    };
+
+    template <class TActual, class TContain> class ExpectContainIterator<TActual, TContain, typename std::enable_if<ExpectContainTest::iteratorValueCompareSupported<TActual, TContain>::value>::type> {
+    public:
+        using TActualParameterType = typename ExpectType<TActual>::ParameterType;
+        using TContainParameterType = typename ExpectType<TContain>::ParameterType;
+        
+        static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value) {
             for (auto rangeValue: actual) {
                 if (rangeValue == value) {
                     return;
                 }
             }
             ExpectScenario::fail(scenario, ExpectFailureMessage::makeContain(actual, value), line);
+        }
+    };
+    
+    template <class TActual, class TContain, class Enabler = void> class ExpectContain {
+    public:
+        using TActualParameterType = typename ExpectType<TActual>::ParameterType;
+        using TContainParameterType = typename ExpectType<TContain>::ParameterType;
+        static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value) {
+            Internal::unused(value);
+            ExpectScenario::fail(scenario, ExpectFailureMessage::makeContainNotIterable(actual), line);
+        }
+    };
+
+    template <class TActual, class TContain> class ExpectContain<TActual, TContain, typename std::enable_if<ExpectContainTest::iterableSupported<TActual, TContain>::value>::type> {
+    public:
+        using TActualParameterType = typename ExpectType<TActual>::ParameterType;
+        using TContainParameterType = typename ExpectType<TContain>::ParameterType;
+        
+        static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value) {
+            ExpectContainIterator<TActual, TContain>::run(scenario, line, actual, value);
         }
     };
 }

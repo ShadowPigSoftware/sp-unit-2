@@ -72,5 +72,22 @@ namespace SPUnit {
             ExpectFailureType<TContain>::stream(ss, contain);
             return ss.str();
         }
+
+        template <class TActual> static std::string makeContainNotIterable(const TActual& actual) {
+            std::stringstream ss;
+            ExpectFailureType<TActual>::stream(ss, actual);
+            ss << " is not iterable";
+            return ss.str();
+        }
+
+        template <class TActual, class TContain> static std::string makeContainValueNotComparable(const TActual& actual, const TContain& contain) {
+            std::stringstream ss;
+            ss << "Cannot compare ";
+            ExpectFailureType<TContain>::stream(ss, contain);
+            ss << " against values in ";
+            ExpectFailureType<TActual>::stream(ss, actual);
+            ss << ": No valid comparison (==) operator";
+            return ss.str();
+        }
     };
 }
