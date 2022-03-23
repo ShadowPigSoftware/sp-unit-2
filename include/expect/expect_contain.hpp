@@ -17,6 +17,7 @@ namespace SPUnit {
     public:
         template <class T> using CheckConstBegin = std::void_t<decltype(std::begin(std::declval<const T&>()))>;
         template <class T> using CheckConstEnd = std::void_t<decltype(std::begin(std::declval<const T&>()))>;
+        template <class TActual, class TContain> using CheckFindMethod = std::void_t<decltype(std::declval<TActual>().find(std::declval<TContain>()))>;
 
         template <class T, class = void>
         struct ConstBeginSupported: public std::false_type {};
@@ -31,6 +32,12 @@ namespace SPUnit {
         struct ConstEndSupported<T, CheckConstEnd<T>>: public std::true_type {};
 
         template <class T> using BeginEndSupported = std::bool_constant<ConstBeginSupported<T>::value && ConstEndSupported<T>::value>;
+
+        template <class TActual, class TContain, class = void>
+        struct FindMethodSupported: public std::false_type {};
+        
+        template <class TActual, class TContain>
+        struct FindMethodSupported<TActual, TContain, CheckFindMethod<TActual, TContain>>: public std::true_type {};
 
         template <class TActual, class TContain, class = void>
         class IterableTest {
@@ -91,16 +98,41 @@ namespace SPUnit {
         >;
 
         template <class TActual, class TContain> using iteratorValueCompareSupported = typename IterableTest<TActual, TContain>::IteratorValueComparable;
+        template <class TActual, class TContain> using findMethodSupported = FindMethodSupported<TActual, TContain>;
     };
 
+    template <class TActual, class TContain, class Enabler = void> class ExpectContainFind {
+    public:
+        using TActualParameterType = typename ExpectType<TActual>::ParameterType;
+        using TContainParameterType = typename ExpectType<TContain>::ParameterType;
+        
+        static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value, const std::string& fallback) {
+            Internal::unused(actual, value);
+            ExpectScenario::fail(scenario, fallback, line);
+        }
+    };
+
+    template <class TActual, class TContain> class ExpectContainFind<TActual, TContain, typename std::enable_if<ExpectContainTest::findMethodSupported<TActual, TContain>::value>::type> {
+    public:
+        using TActualParameterType = typename ExpectType<TActual>::ParameterType;
+        using TContainParameterType = typename ExpectType<TContain>::ParameterType;
+        
+        static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value, const std::string& fallback) {
+            Internal::unused(actual, value, fallback);
+            if (!actual.find(value))
+            {
+                ExpectScenario::fail(scenario, ExpectFailureMessage::makeContainCannotFind(actual, value), line);
+            }
+        }
+    };
+    
     template <class TActual, class TContain, class Enabler = void> class ExpectContainIterator {
     public:
         using TActualParameterType = typename ExpectType<TActual>::ParameterType;
         using TContainParameterType = typename ExpectType<TContain>::ParameterType;
         
         static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value) {
-            Internal::unused(actual, value);
-            ExpectScenario::fail(scenario, ExpectFailureMessage::makeContainValueNotComparable(actual, value), line);
+            ExpectContainFind<TActual, TContain>::run(scenario, line, actual, value, ExpectFailureMessage::makeContainValueNotComparable(actual, value));
         }
     };
 
@@ -124,8 +156,7 @@ namespace SPUnit {
         using TActualParameterType = typename ExpectType<TActual>::ParameterType;
         using TContainParameterType = typename ExpectType<TContain>::ParameterType;
         static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value) {
-            Internal::unused(value);
-            ExpectScenario::fail(scenario, ExpectFailureMessage::makeContainNotIterable(actual), line);
+            ExpectContainFind<TActual, TContain>::run(scenario, line, actual, value, ExpectFailureMessage::makeContainNotIterable(actual));
         }
     };
 

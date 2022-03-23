@@ -89,5 +89,13 @@ namespace SPUnit {
             ss << ": No valid comparison (==) operator";
             return ss.str();
         }
+
+        template <class TActual, class TContain> static std::string makeContainCannotFind(const TActual& actual, const TContain& contain) {
+            std::stringstream ss;
+            ExpectFailureType<TContain>::stream(ss, contain);
+            ss << " was not found using find method on ";
+            ExpectFailureType<TActual>::stream(ss, actual);;
+            return ss.str();
+        }
     };
 }
