@@ -13,8 +13,7 @@ namespace SPUnit {
         using TActualParameterType = typename ExpectType<TActual>::ParameterType;
         using TContainParameterType = typename ExpectType<TContain>::ParameterType;
         static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value) {
-            Internal::unused(actual, value);
-            ExpectScenario::fail(scenario, "No valid string.find() method", line);
+            ExpectScenario::fail(scenario, ExpectFailureMessage::makeContainNoStringFind(actual, value), line);
         }
     };
 
@@ -24,7 +23,7 @@ namespace SPUnit {
         using TContainParameterType = typename ExpectType<TContain>::ParameterType;
         static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value) {
             if (actual.find(value) == std::string::npos) {
-                ExpectScenario::fail(scenario, "not found", line);
+                ExpectScenario::fail(scenario, ExpectFailureMessage::makeContainCannotFind(actual, value), line);
             }
         }
     };

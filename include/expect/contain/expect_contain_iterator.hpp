@@ -28,8 +28,7 @@ namespace SPUnit {
                     return;
                 }
             }
-            ExpectScenario::fail(scenario, "could not find item in list", line);
-            //ExpectScenario::fail(scenario, "String find implemented", line);
+            ExpectScenario::fail(scenario, ExpectFailureMessage::makeContainCannotFind(actual, value), line);
         }
     };
 }

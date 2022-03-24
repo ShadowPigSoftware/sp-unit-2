@@ -93,8 +93,32 @@ namespace SPUnit {
         template <class TActual, class TContain> static std::string makeContainCannotFind(const TActual& actual, const TContain& contain) {
             std::stringstream ss;
             ExpectFailureType<TContain>::stream(ss, contain);
-            ss << " was not found using find method on ";
+            ss << " was not found in ";
             ExpectFailureType<TActual>::stream(ss, actual);;
+            return ss.str();
+        }
+
+        template <class TActual, class TContain> static std::string makeContainNoStringFind(const TActual& actual, const TContain& contain) {
+            std::stringstream ss;
+            Internal::unused(actual);
+            ss << "No valid string.find() method for value ";
+            ExpectFailureType<TContain>::stream(ss, contain);
+            return ss.str();
+        }
+
+        template <class TActual, class TContain> static std::string makeContainNoIteratorNoContains(const TActual& actual, const TContain& contain) {
+            Internal::unused(actual);
+            std::stringstream ss;
+            ss << "Could not compare range-based iterator to ";
+            ExpectFailureType<TContain>::stream(ss, contain);
+            ss << ", and no usable contains method defined on object";
+            return ss.str();
+        }
+
+        template <class TActual, class TContain> static std::string makeContainNotIterableNoContains(const TActual& actual, const TContain& contain) {
+            Internal::unused(actual, contain);
+            std::stringstream ss;
+            ss << "Object is not iterable, and no usable contains method defined on object";
             return ss.str();
         }
     };

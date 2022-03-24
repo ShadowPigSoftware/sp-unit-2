@@ -13,7 +13,12 @@ namespace SPUnit {
         using TContainParameterType = typename ExpectType<TContain>::ParameterType;
         static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value, bool iterable) {
             Internal::unused(actual, value, iterable);
-            ExpectScenario::fail(scenario, "No contains method", line);
+            if (iterable) {
+                ExpectScenario::fail(scenario, ExpectFailureMessage::makeContainNoIteratorNoContains(actual, value), line);
+            }
+            else {
+                ExpectScenario::fail(scenario, ExpectFailureMessage::makeContainNotIterableNoContains(actual, value), line);
+            }
         }
     };
 
@@ -24,7 +29,7 @@ namespace SPUnit {
         static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value, bool iterable) {
             Internal::unused(iterable);
             if (!actual.contains(value)) {
-                ExpectScenario::fail(scenario, "could not find with contains", line);
+                ExpectScenario::fail(scenario, ExpectFailureMessage::makeContainCannotFind(actual, value), line);
             }
         }
     };
