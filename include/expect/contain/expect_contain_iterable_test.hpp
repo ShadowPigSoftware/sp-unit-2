@@ -9,7 +9,6 @@ namespace SPUnit {
     public:
         template <class T> using CheckConstBegin = std::void_t<decltype(std::begin(std::declval<const T&>()))>;
         template <class T> using CheckConstEnd = std::void_t<decltype(std::begin(std::declval<const T&>()))>;
-        template <class TActual, class TContain> using CheckFindMethod = std::void_t<decltype(std::declval<TActual>().find(std::declval<TContain>()))>;
 
         template <class T, class = void>
         struct ConstBeginSupported: public std::false_type {};
@@ -25,7 +24,7 @@ namespace SPUnit {
 
         template <class T> using BeginEndSupported = std::bool_constant<ConstBeginSupported<T>::value && ConstEndSupported<T>::value>;
 
-        template <class TActual, class TContain, class = void>
+        template <class TActual, class = void>
         class IterableTest {
         public:
             using BeginEndComparableSupported = std::false_type;
@@ -33,8 +32,8 @@ namespace SPUnit {
             using DereferenceSupported = std::false_type;
         };
 
-        template <class TActual, class TContain>
-        class IterableTest<TActual, TContain, typename std::enable_if<BeginEndSupported<TActual>::value>::type> {//int can be anything but void
+        template <class TActual>
+        class IterableTest<TActual, typename std::enable_if<BeginEndSupported<TActual>::value>::type> {//int can be anything but void
         public:
             using BeginEndComparableSupported = ExpectDifferenceTest::supported<decltype(std::begin(std::declval<const TActual&>())), decltype(std::begin(std::declval<const TActual&>()))>;
 
@@ -62,12 +61,12 @@ namespace SPUnit {
             using DereferenceSupported = typename Internal::DereferenceSupported<void>;
         };
 
-        template <class TActual, class TContain> using supported = std::bool_constant<
-            ConstBeginSupported<TActual, TContain>::value &&
-            ConstEndSupported<TActual, TContain>::value &&
-            IterableTest<TActual, TContain>::BeginEndComparableSupported::value &&
-            IterableTest<TActual, TContain>::PreIncrementSupported::value &&
-            IterableTest<TActual, TContain>::DereferenceSupported::value
+        template <class TActual, class TContainUnused> using supported = std::bool_constant<
+            ConstBeginSupported<TActual>::value &&
+            ConstEndSupported<TActual>::value &&
+            IterableTest<TActual>::BeginEndComparableSupported::value &&
+            IterableTest<TActual>::PreIncrementSupported::value &&
+            IterableTest<TActual>::DereferenceSupported::value
         >;
     };
 }

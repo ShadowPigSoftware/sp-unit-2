@@ -6,6 +6,7 @@
 #include "expect_difference.hpp"
 #include "expect_comparison.hpp"
 #include "contain/expect_contain_string.hpp"
+#include "contain/expect_contain_iterable.hpp"
 #include "contain/expect_contain_test.hpp"
 #include "types/expect_type.hpp"
 
@@ -90,8 +91,7 @@ namespace SPUnit {
         using TActualParameterType = typename ExpectType<TActual>::ParameterType;
         using TContainParameterType = typename ExpectType<TContain>::ParameterType;
         static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value) {
-            Internal::unused(actual, value);
-            ExpectScenario::fail(scenario, "Not a string", line);
+            ExpectContainIterable<TActual, TContain>::run(scenario, line, actual, value);
         }
     };
 

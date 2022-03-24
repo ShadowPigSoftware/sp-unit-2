@@ -8,10 +8,10 @@ CPP_FLAGS ?= -Wall -Werror -Wextra
 # parameter 2 =  output directory
 # Example usage: $(call spunit_make_build_cpp_target,src,build/src)
 define spunit_make_build_cpp_target
-	$(eval $(call _spunit_make_build_cpp_target,$(1),$(2)))
+	$(eval $(call _spunit_make_build_cpp_target,$(1),$(2),$(3)))
 endef
 define _spunit_make_build_cpp_target
 $(2)/%.cpp.o: $(1)/%.cpp
 	@$$(MKDIR) $$(@D)
-	$$(CPP) $$(CPP_FLAGS) $$(SPUNIT_INCLUDE) -MMD -MP -MT $$@ -MF $(2)/$$*.cpp.d -c $$< -o $$@
+	$$(CPP) $$(CPP_FLAGS) $$(SPUNIT_INCLUDE) -MMD -MP -MT $$@ -MF $(2)/$$*.cpp.d -c $$< -o $$@ $(3)
 endef

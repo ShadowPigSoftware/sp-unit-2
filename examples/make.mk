@@ -1,2 +1,3 @@
 SPUNIT_EXAMPLE_SOURCE_FILES +=	$(SPUNIT_EXAMPLES_DIRECTORY)/main.cpp\
-								$(SPUNIT_EXAMPLES_DIRECTORY)/simple_test.cpp
+								$(SPUNIT_EXAMPLES_DIRECTORY)/simple_test.cpp \
+								$(SPUNIT_EXAMPLES_DIRECTORY)/contain_test.cpp
