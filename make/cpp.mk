@@ -1,8 +1,12 @@
-CPP ?= g++ -std=c++17
+ifeq ($(SPUNIT_OVERRIDE_CPP),)
+SPUNIT_CPP = g++ -std=c++17
+else
+SPUNIT_CPP = $(SPUNIT_OVERRIDE_CPP)
+endif
 
-CPP_DEBUG_FLAGS ?= -g3 -O0
-CPP_RELEASE_FLAGS ?= -g0 -O3
-CPP_FLAGS ?= -Wall -Werror -Wextra
+SPUNIT_CPP_DEBUG_FLAGS ?= -g3 -O0
+SPUNIT_CPP_RELEASE_FLAGS ?= -g0 -O3
+SPUNIT_CPP_FLAGS ?= -Wall -Werror -Wextra
 #Place a target for building an output (.o) file based on a C++ (.cpp) file
 # parameter 1 = source directory
 # parameter 2 =  output directory
@@ -13,5 +17,5 @@ endef
 define _spunit_make_build_cpp_target
 $(2)/%.cpp.o: $(1)/%.cpp
 	@$$(MKDIR) $$(@D)
-	$$(CPP) $$(CPP_FLAGS) $$(SPUNIT_INCLUDE) -MMD -MP -MT $$@ -MF $(2)/$$*.cpp.d -c $$< -o $$@ $(3)
+	$$(SPUNIT_CPP) $$(SPUNIT_CPP_FLAGS) $$(SPUNIT_INCLUDE) -MMD -MP -MT $$@ -MF $(2)/$$*.cpp.d -c $$< -o $$@ $(3)
 endef
