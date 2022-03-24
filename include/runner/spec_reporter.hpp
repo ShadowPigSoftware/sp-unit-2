@@ -5,8 +5,8 @@
 namespace SPUnit {    
     class SpecReporter: public NullReporter {
     public:
-        static constexpr const char* defaultTickSymbol = "\u2713";
-        static constexpr const char* defaultCrossSymbol = "\u2716";
+        static constexpr const char* defaultTickSymbol = "+";
+        static constexpr const char* defaultCrossSymbol = "-";
         SpecReporter(const char* tickSymbol = defaultTickSymbol, const char* crossSymbol = defaultCrossSymbol);
         void beginFixture(const Fixture& fixture) override;
         void endFixture(const Fixture& fixture) override;

@@ -2,7 +2,7 @@
 #include "runner/cout_output_stream.hpp"
 
 namespace SPUnit {    
-    void CoutOutputStreamColorSupportAnsi8::processColor(Color color, CoutOutputStream& stream) const {
+    void CoutOutputStreamColorSupportAnsi8::processColor(Color color, OutputStream& stream) const {
         switch (color) {
         case Color::Reset:
             stream << "\u001b[0m";

@@ -5,7 +5,7 @@
 namespace SPUnit {    
     class CoutOutputStreamColorSupportNone: public CoutOutputStreamColorSupport {
     public:
-        void processColor(Color color, CoutOutputStream& stream) const override;
+        void processColor(Color color, OutputStream& stream) const override;
         static CoutOutputStreamColorSupportNone instance;
     };
 }

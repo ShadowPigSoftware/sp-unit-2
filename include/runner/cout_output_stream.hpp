@@ -4,6 +4,7 @@
 
 #include "cout_output_stream_color_support_none.hpp"
 #include "cout_output_stream_color_support_ansi8.hpp"
+#include "cout_output_stream_color_support_windows.hpp"
 
 namespace SPUnit {    
     class CoutOutputStream: public OutputStream {
@@ -11,6 +12,7 @@ namespace SPUnit {
         struct ColorSupport {
             using None = CoutOutputStreamColorSupportNone;
             using Ansi8 = CoutOutputStreamColorSupportAnsi8;
+            using Windows = CoutOutputStreamColorSupportWindows;
         };
         CoutOutputStream(const CoutOutputStreamColorSupport& colorSupport = ColorSupport::None::instance);
         CoutOutputStream& operator<< (bool value) override;

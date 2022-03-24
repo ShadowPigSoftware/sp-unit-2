@@ -28,6 +28,7 @@ SPUNIT_SOURCE_FILES +=	$(SPUNIT_SOURCE_DIRECTORY)/common/common_flags.cpp\
 						$(SPUNIT_SOURCE_DIRECTORY)/runner/cout_output_stream.cpp\
 						$(SPUNIT_SOURCE_DIRECTORY)/runner/cout_output_stream_color_support_none.cpp\
 						$(SPUNIT_SOURCE_DIRECTORY)/runner/cout_output_stream_color_support_ansi8.cpp\
+						$(SPUNIT_SOURCE_DIRECTORY)/runner/cout_output_stream_color_support_windows.cpp\
 						$(SPUNIT_SOURCE_DIRECTORY)/runner/null_output_stream.cpp\
 						$(SPUNIT_SOURCE_DIRECTORY)/expect/make_expect.cpp\
 						$(SPUNIT_SOURCE_DIRECTORY)/expect/expect_scenario.cpp\
