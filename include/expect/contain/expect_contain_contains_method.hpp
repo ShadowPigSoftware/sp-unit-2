@@ -22,6 +22,7 @@ namespace SPUnit {
         using TActualParameterType = typename ExpectType<TActual>::ParameterType;
         using TContainParameterType = typename ExpectType<TContain>::ParameterType;
         static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value, bool iterable) {
+            Internal::unused(iterable);
             if (!actual.contains(value)) {
                 ExpectScenario::fail(scenario, "could not find with contains", line);
             }
