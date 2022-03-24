@@ -9,5 +9,3 @@ spunit/examples: $(SPUNIT_EXAMPLE_APPLICATION)
 
 spunit/examples/run: spunit/examples
 	@$(SPUNIT_EXAMPLE_APPLICATION)
-
-$(call spunit_make_build_cpp_target,$(SPUNIT_EXAMPLES_DIRECTORY),$(SPUNIT_BUILD_DIRECTORY)/$(SPUNIT_EXAMPLES_DIRECTORY),-DSPU_NS=$$(call spunit_namespace))

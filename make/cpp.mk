@@ -1,4 +1,4 @@
-CPP = g++ -std=c++17
+CPP ?= g++ -std=c++17
 
 CPP_DEBUG_FLAGS ?= -g3 -O0
 CPP_RELEASE_FLAGS ?= -g0 -O3
