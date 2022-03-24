@@ -5,6 +5,7 @@ namespace SPUnit {
     namespace {
         NullOutputStream nullOutputStream;
     }
+
     Reporter::Reporter():
         _stream {&nullOutputStream}
     {}
@@ -12,7 +13,7 @@ namespace SPUnit {
     OutputStream& Reporter::stream() {
         return *_stream;
     }
-        
+
     void Reporter::setOutputStream(OutputStream& stream) {
         _stream = &stream;
     }
