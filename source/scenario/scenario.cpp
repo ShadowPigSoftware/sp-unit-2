@@ -40,6 +40,6 @@ namespace SPUnit {
     }
 
     void Scenario::fail(const std::string& error, uint32_t line) {
-        _status = ScenarioStatus {error, _file, line};
+        _status.addFailure(ScenarioStatus::Error {error, _file, line});
     }
 }

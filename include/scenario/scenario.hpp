@@ -13,6 +13,7 @@ namespace SPUnit {
         using Flags = CommonFlags;
         using Delegate = ScenarioDelegate;
         using Status = ScenarioStatus::Status;
+        using Error = ScenarioStatus::Error;
         Scenario(Fixture* parent, const char* description, Delegate& delegate, const char* file, uint32_t line);
         Scenario(Fixture* parent, const char* description, Delegate& delegate, const Flags& flags, const char* file, uint32_t line);
 

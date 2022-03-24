@@ -16,6 +16,8 @@ namespace SPUnit {
         void finalizeSuccess();
         void finalizeFailure();
         void printIndent();
+        void printSingleError(const Scenario& scenario, uint32_t index);
+        void printMultipleErrors(const Scenario& scenario, uint32_t index);
         const char* _tickSymbol;
         const char* _crossSymbol;
         uint32_t _indent;

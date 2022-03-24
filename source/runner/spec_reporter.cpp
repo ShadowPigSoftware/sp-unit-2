@@ -59,11 +59,13 @@ namespace SPUnit {
         stream << stream.reset << ":" << stream.endl << stream.endl;
         uint32_t index = 0;
         for (const Scenario* scenario : _failures) {
-            stream << stream.white << index << ") " << scenario->description() << ": ";
-            stream << stream.red << scenario->status().error().c_str() << stream.endl;
-            stream << stream.reset << "  at " << scenario->status().file() << ":" << scenario->status().line() << stream.endl << stream.endl;
+            if (scenario->status().errors().size() == 1) {
+                printSingleError(*scenario, index);
+            }
+            else {
+                printMultipleErrors(*scenario, index);
+            }
             ++index;
-
         }
     }
 
@@ -72,5 +74,25 @@ namespace SPUnit {
         for (uint32_t i = 0; i < _indent; ++i) {
             stream() << "  ";
         }
+    }
+
+    void SpecReporter::printSingleError(const Scenario& scenario, uint32_t index) {
+        SPUnit::OutputStream& stream = this->stream();
+        for (const Scenario::Error& error: scenario.status().errors()) {
+            stream << stream.white << index << ") " << scenario.description() << ": ";
+            stream << stream.red << error.error << stream.endl;
+            stream << stream.reset << "  at " << error.file << ":" << error.line << stream.endl << stream.endl;
+        }
+    }
+
+     void SpecReporter::printMultipleErrors(const Scenario& scenario, uint32_t index) {
+        SPUnit::OutputStream& stream = this->stream();
+        stream << stream.white << index << ") " << scenario.description() << ": ";
+        stream << stream.red << "" << scenario.status().errors().size() << " errors" << stream.endl;
+        for (const Scenario::Error& error: scenario.status().errors()) {
+            stream << stream.red << "  - " << error.error << stream.endl;
+            stream << stream.reset << "      at " << error.file << ":" << error.line << stream.endl;
+        }
+        stream << stream.endl;
     }
 }

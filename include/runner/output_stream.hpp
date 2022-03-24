@@ -23,6 +23,7 @@ namespace SPUnit {
         virtual OutputStream& operator<< (double value) = 0;
         virtual OutputStream& operator<< (long double value) = 0;
         virtual OutputStream& operator<< (const char* value) = 0;
+        virtual OutputStream& operator<< (const std::string& value) {return operator<<(value.c_str());};
         virtual OutputStream& operator<< (void* value) = 0;
         virtual OutputStream& operator<< (Manipulator value) = 0;
         virtual OutputStream& operator<< (Color value) = 0;

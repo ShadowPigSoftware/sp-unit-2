@@ -11,20 +11,20 @@ namespace SPUnit {
             Failure
         };
 
-        ScenarioStatus();
-        ScenarioStatus(const std::string& error, const char* file, uint32_t line);
-        ScenarioStatus(const ScenarioStatus& status);
+        struct Error {
+            std::string error;
+            const char* file;
+            uint32_t line;
+        };
 
-        ScenarioStatus& operator=(const ScenarioStatus& status);
+        using ErrorList = std::list<Error>;
         
         bool operator == (Status status) const;
-        const std::string& error() const;
-        const char* file() const;
-        uint32_t line() const;
+
+        void addFailure(const Error& error);
+
+        const ErrorList& errors() const;
     private:
-        Status _status;
-        std::string _error;
-        const char* _file;
-        uint32_t _line;
+        ErrorList _errors;
     };
 }
