@@ -10,7 +10,7 @@ fixture("This is a simple fixture") {
         //expect(1.0).to.be.within(0.1).of(Abc {});
         // expect(1).to.equal(Abc {});
         //expect(array).to.contain("");
-        expect(std::string("abc")).to.contain(5);
+        expect(std::string("abc")).to.contain((const char*)("abc"));
         // expect(1).to.be.lessThan(array);
     }
     
