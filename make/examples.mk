@@ -8,4 +8,4 @@ spunit/examples: SPUNIT_INCLUDE += -I$(SPUNIT_EXAMPLES_DIRECTORY)
 spunit/examples: $(SPUNIT_EXAMPLE_APPLICATION)
 
 spunit/examples/run: spunit/examples
-	@$(SPUNIT_EXAMPLE_APPLICATION)
+	@$(SPUNIT_EXAMPLE_APPLICATION) --spunit-reporter=spec --spunit-stream-color=windows
