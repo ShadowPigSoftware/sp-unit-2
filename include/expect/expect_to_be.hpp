@@ -14,38 +14,52 @@ namespace SPUnit {
 
     template <class T> class ExpectToBe {
     public:
-        ExpectToBe(Scenario& scenario, uint32_t line, typename ExpectType<T>::ParameterType actual):
+        ExpectToBe(Scenario& scenario, uint32_t line, bool execute, typename ExpectType<T>::ParameterType actual, bool invertLogic):
             _scenario {scenario},
             _line {line},
-            _actual {actual}
+            _execute {execute},
+            _actual {actual},
+            _invertLogic {invertLogic}
         {}
 
         template <class U> void equalTo(const U& expected) const {
-            ExpectComparison<T,U>::run(_scenario, _line, _actual, expected);            
+            if (_execute) {
+                ExpectComparison<T,U>::run(_scenario, _line, _actual, expected, _invertLogic); 
+            }
         }
 
         template <class U> void lessThan(const U& expected) const {
-            ExpectLessThan<T,U>::run(_scenario, _line, _actual, expected);            
+            if (_execute) {
+                ExpectLessThan<T,U>::run(_scenario, _line, _actual, expected, _invertLogic);
+            }
         }
 
         template <class U> void greaterThan(const U& expected) const {
-            ExpectGreaterThan<T,U>::run(_scenario, _line, _actual, expected);            
+            if (_execute) {
+                ExpectGreaterThan<T,U>::run(_scenario, _line, _actual, expected, _invertLogic);
+            }
         }
 
         template <class U> void lessThanOrEqual(const U& expected) const {
-            ExpectLessThanOrEqual<T,U>::run(_scenario, _line, _actual, expected);            
+            if (_execute) {
+                ExpectLessThanOrEqual<T,U>::run(_scenario, _line, _actual, expected, _invertLogic);
+            }
         }
 
         template <class U> void greaterThanOrEqual(const U& expected) const {
-            ExpectGreaterThanOrEqual<T,U>::run(_scenario, _line, _actual, expected);            
+            if (_execute) {
+                ExpectGreaterThanOrEqual<T,U>::run(_scenario, _line, _actual, expected, _invertLogic);
+            }
         }
 
         template <class U> ExpectToBeWithin<T, U> within(const U& threshold) const {
-            return ExpectToBeWithin<T, U>(_scenario, _line, _actual, threshold);
+            return ExpectToBeWithin<T, U>(_scenario, _line, _execute, _actual, threshold, _invertLogic);
         }
     private:
         Scenario& _scenario; 
         uint32_t _line;
+        bool _execute;
         typename ExpectType<T>::StorageType _actual;
+        bool _invertLogic;
     };
 }

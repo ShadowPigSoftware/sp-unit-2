@@ -16,6 +16,7 @@ namespace SPUnit {
         bool contains(const char* value) const;
 
         static constexpr const char* skip = "skip";
+        static constexpr const char* failOnFirstError = "fail-on-first-error";
     private:
         FlagList _flags;
     };

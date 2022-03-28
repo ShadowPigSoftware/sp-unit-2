@@ -10,20 +10,27 @@ namespace SPUnit {
 
     template <class TActual, class TThreshold> class ExpectToBeWithin {
     public:
-        ExpectToBeWithin(Scenario& scenario, uint32_t line, typename ExpectType<TActual>::ParameterType actual, typename ExpectType<TThreshold>::ParameterType threshold):
+        ExpectToBeWithin(Scenario& scenario, uint32_t line, bool execute, typename ExpectType<TActual>::ParameterType actual, typename ExpectType<TThreshold>::ParameterType threshold, bool invertLogic):
             _scenario {scenario},
             _line {line},
+            _execute {execute},
             _actual {actual},
-            _threshold {threshold}
+            _threshold {threshold},
+            _invertLogic {invertLogic}
         {}
 
         template <class U> void of(const U& expected) const {
-            ExpectThreshold<TActual,U, TThreshold>::run(_scenario, _line, _actual, expected, _threshold);            
+            if (_execute)
+            {
+                ExpectThreshold<TActual,U, TThreshold>::run(_scenario, _line, _actual, expected, _threshold, _invertLogic);
+            }
         }
     private:
         Scenario& _scenario; 
         uint32_t _line;
+        bool _execute;
         typename ExpectType<TActual>::StorageType _actual;
         typename ExpectType<TThreshold>::StorageType _threshold;
+        bool _invertLogic;
     };
 }

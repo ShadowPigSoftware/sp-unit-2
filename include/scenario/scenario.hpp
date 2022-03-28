@@ -5,6 +5,7 @@
 
 #include "scenario_delegate.hpp"
 #include "scenario_status.hpp"
+#include "scenario_fail_on_first_error.hpp"
 
 namespace SPUnit {
     class Fixture;
@@ -14,6 +15,7 @@ namespace SPUnit {
         using Delegate = ScenarioDelegate;
         using Status = ScenarioStatus::Status;
         using Error = ScenarioStatus::Error;
+        using FailOnFirstError = ScenarioFailOnFirstError;
         Scenario(Fixture* parent, const char* description, Delegate& delegate, const char* file, uint32_t line);
         Scenario(Fixture* parent, const char* description, Delegate& delegate, const Flags& flags, const char* file, uint32_t line);
 
@@ -21,8 +23,12 @@ namespace SPUnit {
 
         const ScenarioStatus& status() const;
         void fail(const std::string& error, uint32_t line);
+
+        bool failOnFirstError() const;
     private:
         void run(Reporter& reporter) override;
+        void runDelegate(Reporter& reporter);
+        void handleUncaughtException();
     private:
         const char* const _description;
         Delegate& _delegate;

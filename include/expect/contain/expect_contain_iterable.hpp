@@ -13,8 +13,8 @@ namespace SPUnit {
     public:
         using TActualParameterType = typename ExpectType<TActual>::ParameterType;
         using TContainParameterType = typename ExpectType<TContain>::ParameterType;
-        static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value) {
-            ExpectContainContainsMethod<TActual, TContain>::run(scenario, line, actual, value, false);
+        static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value, bool invertLogic) {
+            ExpectContainContainsMethod<TActual, TContain>::run(scenario, line, actual, value, false, invertLogic);
         }
     };
 
@@ -22,8 +22,8 @@ namespace SPUnit {
     public:
         using TActualParameterType = typename ExpectType<TActual>::ParameterType;
         using TContainParameterType = typename ExpectType<TContain>::ParameterType;
-        static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value) {
-            ExpectContainIterator<TActual, TContain>::run(scenario, line, actual, value);
+        static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value, bool invertLogic) {
+            ExpectContainIterator<TActual, TContain>::run(scenario, line, actual, value, invertLogic);
         }
     };
 }

@@ -18,16 +18,33 @@ namespace SPUnit {
         Internal::FixtureScenarioAttorney::addScenario(*parent, *this);
     }
     
-    void Scenario::run(Reporter& reporter)
-    {
+    void Scenario::run(Reporter& reporter) {
         if (_flags.contains(_flags.skip)) {
             reporter.skipScenario(*this);
-        }
-        else
-        {
+        } else {
             reporter.beginScenario(*this);
-            _delegate.function(*this, reporter, Internal::StreamReporterAttorney::stream(reporter));
+            runDelegate(reporter);
+            
             reporter.endScenario(*this);
+        }
+    }
+
+    void Scenario::runDelegate(Reporter& reporter) {
+        try {
+            _delegate.function(*this, reporter, Internal::StreamReporterAttorney::stream(reporter));
+        }
+        catch (const FailOnFirstError&)
+        {
+            //do nothing.
+        }
+        catch (...) {
+            handleUncaughtException();
+        }
+    }
+
+    void Scenario::handleUncaughtException() {
+        if (!(failOnFirstError() && _status.errors().size() == 1)) {
+            _status.addFailure(ScenarioStatus::Error {"Uncaught Exception", _file, 0});
         }
     }
 
@@ -40,6 +57,15 @@ namespace SPUnit {
     }
 
     void Scenario::fail(const std::string& error, uint32_t line) {
-        _status.addFailure(ScenarioStatus::Error {error, _file, line});
+        //TODO failonFirstError Here
+        if (failOnFirstError() && _status.errors().size() == 1) {
+            throw FailOnFirstError();
+        } else {
+            _status.addFailure(ScenarioStatus::Error {error, _file, line});
+        }
+    }
+
+    bool Scenario::failOnFirstError() const {
+        return _flags.contains(_flags.failOnFirstError);
     }
 }

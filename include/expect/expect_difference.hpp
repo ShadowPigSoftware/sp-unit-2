@@ -21,9 +21,9 @@ namespace SPUnit {
     public:
         using TParameterType = typename ExpectType<T>::ParameterType;
         using UParameterType = typename ExpectType<U>::ParameterType;
-        static void run(Scenario& scenario, uint32_t line, TParameterType actual, UParameterType expected) {
-            Internal::unused(actual, expected);
-            ExpectScenario::fail(scenario, "The difference operator (!=) is not supported on these objects", line);
+        static void run(Scenario& scenario, uint32_t line, TParameterType actual, UParameterType expected, bool invertLogic) {
+            Internal::unused(actual, expected, invertLogic);
+            ExpectScenario::fail(scenario, ExpectFailureMessage::makeNoDifferenceOperator(), line);
         }
     };
 
@@ -31,9 +31,9 @@ namespace SPUnit {
     public:
         using TParameterType = typename ExpectType<T>::ParameterType;
         using UParameterType = typename ExpectType<U>::ParameterType;
-        static void run(Scenario& scenario, uint32_t line, TParameterType actual, UParameterType expected) {
-            if (!(actual != expected)) {
-                ExpectScenario::fail(scenario, ExpectFailureMessage::makeEqual(actual, expected), line);
+        static void run(Scenario& scenario, uint32_t line, TParameterType actual, UParameterType expected, bool invertLogic) {
+            if ((!(actual != expected)) != invertLogic) { //!= acts as logical XOR
+                ExpectScenario::fail(scenario, ExpectFailureMessage::makeEqual(actual, expected, invertLogic), line);
             }
         }
     };

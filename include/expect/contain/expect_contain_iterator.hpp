@@ -12,8 +12,8 @@ namespace SPUnit {
     public:
         using TActualParameterType = typename ExpectType<TActual>::ParameterType;
         using TContainParameterType = typename ExpectType<TContain>::ParameterType;
-        static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value) {
-            ExpectContainContainsMethod<TActual, TContain>::run(scenario, line, actual, value, true);
+        static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value, bool invertLogic) {
+            ExpectContainContainsMethod<TActual, TContain>::run(scenario, line, actual, value, true, invertLogic);
         }
     };
 
@@ -21,14 +21,19 @@ namespace SPUnit {
     public:
         using TActualParameterType = typename ExpectType<TActual>::ParameterType;
         using TContainParameterType = typename ExpectType<TContain>::ParameterType;
-        static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value) {
+        static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TContainParameterType value, bool invertLogic) {
             Internal::unused(actual, value);
+            bool itemFound = false;
             for (auto item: actual) {
                 if (item == value) {
-                    return;
+                    itemFound = true;
+                    break;
                 }
             }
-            ExpectScenario::fail(scenario, ExpectFailureMessage::makeContainCannotFind(actual, value), line);
+            if (itemFound != invertLogic) { // != acts as logical XOR
+                return;
+            }
+            ExpectScenario::fail(scenario, ExpectFailureMessage::makeContainCannotFind(actual, value, invertLogic), line);
         }
     };
 }

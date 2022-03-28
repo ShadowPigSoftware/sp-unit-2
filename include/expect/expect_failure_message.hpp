@@ -8,55 +8,73 @@
 namespace SPUnit {
     class ExpectFailureMessage {
     public:
-        template <class T, class U> static std::string makeEqual(const T& actual, const U& expected) {
+        template <class T, class U> static std::string makeEqual(const T& actual, const U& expected, bool invertLogic) {
             std::stringstream ss;
             ss << "Expected ";
             ExpectFailureType<T>::stream(ss, actual);
+            if (invertLogic) {
+                ss << " not";
+            }
             ss << " to equal ";
             ExpectFailureType<U>::stream(ss, expected);
             return ss.str();
         }
 
-        template <class T, class U> static std::string makeLessThan(const T& actual, const U& expected) {
+        template <class T, class U> static std::string makeLessThan(const T& actual, const U& expected, bool invertLogic) {
             std::stringstream ss;
             ss << "Expected ";
             ExpectFailureType<T>::stream(ss, actual);
+            if (invertLogic) {
+                ss << " not";
+            }
             ss << " to be less than ";
             ExpectFailureType<U>::stream(ss, expected);
             return ss.str();
         }
 
-        template <class T, class U> static std::string makeGreaterThan(const T& actual, const U& expected) {
+        template <class T, class U> static std::string makeGreaterThan(const T& actual, const U& expected, bool invertLogic) {
             std::stringstream ss;
             ss << "Expected ";
             ExpectFailureType<T>::stream(ss, actual);
+            if (invertLogic) {
+                ss << " not";
+            }
             ss << " to be greater than ";
             ExpectFailureType<U>::stream(ss, expected);
             return ss.str();
         }
 
-         template <class T, class U> static std::string makeLessThanOrEqual(const T& actual, const U& expected) {
+         template <class T, class U> static std::string makeLessThanOrEqual(const T& actual, const U& expected, bool invertLogic) {
             std::stringstream ss;
             ss << "Expected ";
             ExpectFailureType<T>::stream(ss, actual);
+            if (invertLogic) {
+                ss << " not";
+            }
             ss << " to be less than or equal to ";
             ExpectFailureType<U>::stream(ss, expected);
             return ss.str();
         }
 
-        template <class T, class U> static std::string makeGreaterThanOrEqual(const T& actual, const U& expected) {
+        template <class T, class U> static std::string makeGreaterThanOrEqual(const T& actual, const U& expected, bool invertLogic) {
             std::stringstream ss;
             ss << "Expected ";
             ExpectFailureType<T>::stream(ss, actual);
+            if (invertLogic) {
+                ss << " not";
+            }
             ss << " to be greater than or equal to";
             ExpectFailureType<U>::stream(ss, expected);
             return ss.str();
         }
 
-        template <class TActual, class TExpected, class TThreshold> static std::string makeWithin(const TActual& actual, const TExpected& expected, const TThreshold& threshold) {
+        template <class TActual, class TExpected, class TThreshold> static std::string makeWithin(const TActual& actual, const TExpected& expected, const TThreshold& threshold, bool invertLogic) {
             std::stringstream ss;
             ss << "Expected ";
             ExpectFailureType<TActual>::stream(ss, actual);
+            if (invertLogic) {
+                ss << " not";
+            }
             ss << " to be within ";
             ExpectFailureType<TThreshold>::stream(ss, threshold);
             ss << " of ";
@@ -64,10 +82,22 @@ namespace SPUnit {
             return ss.str();
         }
 
-        template <class TActual, class TContain> static std::string makeContain(const TActual& actual, const TContain& contain) {
+        static std::string makeNoOperator(const std::string& name, const std::string& operatorString);
+        static std::string makeNoComparisonOperator();
+        static std::string makeNoDifferenceOperator();
+        static std::string makeNoGreaterThanOrEqualOperator();
+        static std::string makeNoGreaterThanOperator();
+        static std::string makeNoLessThanOrEqualOperator();
+        static std::string makeNoLessThanOperator();
+        static std::string makeNoThresholdOperator();
+
+        template <class TActual, class TContain> static std::string makeContain(const TActual& actual, const TContain& contain, bool invertLogic) {
             std::stringstream ss;
             ss << "Expected ";
             ExpectFailureType<TActual>::stream(ss, actual);
+            if (invertLogic) {
+                ss << " not";
+            }
             ss << " to contain ";
             ExpectFailureType<TContain>::stream(ss, contain);
             return ss.str();
@@ -90,10 +120,14 @@ namespace SPUnit {
             return ss.str();
         }
 
-        template <class TActual, class TContain> static std::string makeContainCannotFind(const TActual& actual, const TContain& contain) {
+        template <class TActual, class TContain> static std::string makeContainCannotFind(const TActual& actual, const TContain& contain, bool invertLogic) {
             std::stringstream ss;
             ExpectFailureType<TContain>::stream(ss, contain);
-            ss << " was not found in ";
+            ss << " was";
+            if (!invertLogic) {
+                ss << " not";
+            }
+            ss << " found in ";
             ExpectFailureType<TActual>::stream(ss, actual);;
             return ss.str();
         }

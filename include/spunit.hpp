@@ -12,5 +12,5 @@
 #include "spunit_main.hpp"
 
 #ifdef SPUNIT_USE_MACROS
-#include "spunit-macros.hpp"
+#include "spunit_macros.hpp"
 #endif

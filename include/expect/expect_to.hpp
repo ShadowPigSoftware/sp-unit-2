@@ -12,24 +12,32 @@ namespace SPUnit {
 
     template <class T> class ExpectTo {
     public:
-        ExpectTo(Scenario& scenario, uint32_t line, typename ExpectType<T>::ParameterType actual):
-            be {scenario, line, actual},
+        ExpectTo(Scenario& scenario, uint32_t line, bool execute, typename ExpectType<T>::ParameterType actual, bool invertLogic = false):
+            be {scenario, line, execute, actual, invertLogic},
             _scenario {scenario},
             _line {line},
-            _actual {actual}
+            _execute {execute},
+            _actual {actual},
+            _invertLogic {invertLogic}
         {}
 
         template <class U> void equal(const U& expected) const {
-            ExpectComparison<T,U>::run(_scenario, _line, _actual, expected);            
+            if (_execute) {
+                ExpectComparison<T,U>::run(_scenario, _line, _actual, expected, _invertLogic);
+            }
         }
 
         template <class U> void contain(const U& value) const {
-            ExpectContain<T,U>::run(_scenario, _line, _actual, value);            
+            if (_execute) {
+                ExpectContain<T,U>::run(_scenario, _line, _actual, value, _invertLogic);
+            }
         }
         ExpectToBe<T> be;
     private:
         Scenario& _scenario; 
         uint32_t _line;
+        bool _execute;
         typename ExpectType<T>::StorageType _actual;
+        bool _invertLogic;
     };
 }

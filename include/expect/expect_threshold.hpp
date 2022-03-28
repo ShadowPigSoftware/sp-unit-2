@@ -39,9 +39,9 @@ namespace SPUnit {
         using TActualParameterType = typename ExpectType<TActual>::ParameterType;
         using TExpectedParameterType = typename ExpectType<TExpected>::ParameterType;
         using TThresholdParameterType = typename ExpectType<TThreshold>::ParameterType;
-        static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TExpectedParameterType expected, TThresholdParameterType threshold) {
-            Internal::unused(actual, expected, threshold);
-            ExpectScenario::fail(scenario, "The threshold operator (e-t <= a <= e+t) is not supported on these objects", line);
+        static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TExpectedParameterType expected, TThresholdParameterType threshold, bool invertLogic) {
+            Internal::unused(actual, expected, threshold, invertLogic);
+            ExpectScenario::fail(scenario, ExpectFailureMessage::makeNoThresholdOperator(), line);
         }
     };
 
@@ -50,10 +50,10 @@ namespace SPUnit {
         using TActualParameterType = typename ExpectType<TActual>::ParameterType;
         using TExpectedParameterType = typename ExpectType<TExpected>::ParameterType;
         using TThresholdParameterType = typename ExpectType<TThreshold>::ParameterType;
-        static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TExpectedParameterType expected, TThresholdParameterType threshold) {
+        static void run(Scenario& scenario, uint32_t line, TActualParameterType actual, TExpectedParameterType expected, TThresholdParameterType threshold, bool invertLogic) {
             Internal::unused(actual, expected, threshold);
-            if (!(((expected - threshold) <= actual) && (actual <= (expected + threshold)))) {
-                ExpectScenario::fail(scenario, ExpectFailureMessage::makeWithin(actual, expected, threshold), line);
+            if ((!(((expected - threshold) <= actual) && (actual <= (expected + threshold)))) != invertLogic) { //!= acts as logical XOR
+                ExpectScenario::fail(scenario, ExpectFailureMessage::makeWithin(actual, expected, threshold, invertLogic), line);
             }
         }
     };
