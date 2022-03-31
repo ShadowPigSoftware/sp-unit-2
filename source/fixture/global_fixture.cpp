@@ -13,5 +13,6 @@ namespace SPUnit {
     }
     
     ::SPUnit::GlobalFixture _global_spunit_fixture;
-    ::SPUnit::Fixture* const _spunit_fixture = &_global_spunit_fixture;
 }
+
+::SPUnit::Fixture* const _spunit_fixture = &::SPUnit::_global_spunit_fixture;

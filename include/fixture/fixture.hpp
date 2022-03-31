@@ -51,6 +51,6 @@ namespace SPUnit {
         RunnableList _befores;
         RunnableList _afters;
     };
-
-    extern ::SPUnit::Fixture* const _spunit_fixture;
 }
+
+extern ::SPUnit::Fixture* const _spunit_fixture;

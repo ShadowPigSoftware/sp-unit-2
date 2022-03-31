@@ -13,3 +13,4 @@
 #define before SPUNIT_BEFORE
 #define after SPUNIT_AFTER
 #define expect SPUNIT_EXPECT
+#define spunitModule namespace
